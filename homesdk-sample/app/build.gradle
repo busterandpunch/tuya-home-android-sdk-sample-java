@@ -1,19 +1,17 @@
 plugins {
     id 'com.android.application'
-
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
-    signingConfigs {
-        
-    }
+
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.test007.demo"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
@@ -23,6 +21,7 @@ android {
                 TUYA_SMART_APPKEY: "${properties.getProperty("appKey")}",
                 TUYA_SMART_SECRET: "${properties.getProperty("appSecret")}",
         ]
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -45,7 +44,17 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+        Properties signingProperties = new Properties()
+        signingProperties.load(new FileInputStream(file(rootProject.file("signing.properties"))))
 
+        debug {
+            storeFile file(signingProperties["storeFile"])
+            storePassword signingProperties["storePassword"]
+            keyAlias signingProperties["keyAlias"]
+            keyPassword signingProperties['keyPassword']
+        }
+    }
 }
 
 dependencies {

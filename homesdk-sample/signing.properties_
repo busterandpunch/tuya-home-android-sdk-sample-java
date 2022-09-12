@@ -1,0 +1,7 @@
+## Copy this to signing.properties
+## and fill in the details
+
+storeFile=***path to keystore with your dev key***
+storePassword=***
+keyAlias=***
+keyPassword=***
